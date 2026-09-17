@@ -1,0 +1,21 @@
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\Product;
+use Illuminate\Database\Seeder;
+
+class ProductSeeder extends Seeder
+{
+    public function run(): void
+    {
+        $products = [
+            ['slug'=>'efx-9000-edge-router','name'=>'EFX-9000 Edge Router','sku'=>'EFX-9K-IR-01','category'=>'EDGE ROUTER','badge'=>'IN STOCK','image'=>'https://lh3.googleusercontent.com/aida-public/AB6AXuCEkHePGomvuLBQj51cy5wDZZ2IpFCaVQp4dQ0cTiNbHBK4RoC4fzIOurSolBKI89Aip7XMhRz9XrFfaVBX62BNz0iryJa36AYJ5eIyE_wFqm-fAue7SLSiNpSj8c9osa7fB9gLzzIwru74y8V7l8u2yqU9mk7f5DYsByetQBIbW5c5Ju4P8piwSwHjAy4u2fbiLJHqs7qeZT4Wag4aM4o26gw79gDWwg9yMOZvmfVRNMm6W1WuaYnvEQ','description'=>'A high-performance, ruggedized edge router designed for mission-critical industrial applications.','content'=>'Features advanced redundancy, wide temperature tolerance, and secure VPN tunneling to ensure uninterrupted connectivity.','specs'=>[['label'=>'Hardware Architecture','value'=>'Quad-Core ARM Cortex-A72 @ 1.8GHz'],['label'=>'Memory','value'=>'4GB DDR4 ECC RAM'],['label'=>'Storage','value'=>'32GB eMMC Industrial Grade'],['label'=>'Interfaces','value'=>'8x 10/100/1000Base-T(X) RJ45 • 2x 10G SFP+ Slots'],['label'=>'Power Input','value'=>'Dual Redundant 12~48 VDC'],['label'=>'Certifications','value'=>'CE, FCC Part 15, UL 61010-2-201'],['label'=>'Dimensions','value'=>'145 x 110 x 54 mm']],'thumbnails'=>[],'resources'=>[['label'=>'Datasheet • PDF (2.4 MB)','url'=>''],['label'=>'User Manual • PDF (15.1 MB)','url'=>''],['label'=>'Firmware v2.1.4 • ZIP (45 MB)','url'=>'']],'status'=>'published','sort_order'=>1],
+            ['slug'=>'efx-sw500','name'=>'EFX-SW500','sku'=>'EFX-SW-500','category'=>'MANAGED SWITCH','badge'=>null,'image'=>'https://lh3.googleusercontent.com/aida-public/AB6AXuB3BeawmLpxGpmz3aA-zxJG7BfsSUVbNUbzr4SAeqDUKkDU34zcemoSmZ1ctkUpybk9Qw1t3nZ67MYjN1fv2m77IkN40k47E8UDg53e_b4N6nqioykB4e59_-BJj_r5rr6fkIrvRbacY-ddTXGBAtCeM5VDb7Ny3tmXcKkOWxmOyhb4LrW2898dRD4hPIFA8JV-0K2jfXYNHXKtPbOD8xm3aVpGgDrKRdmbadSDZrSimmdfPJeoeMJ3kQ','description'=>'5-Port Gigabit Industrial Managed Ethernet Switch.','content'=>'Reliable managed switching for industrial networks.','specs'=>[],'thumbnails'=>[],'resources'=>[],'status'=>'published','sort_order'=>2],
+            ['slug'=>'efx-pwr-120','name'=>'EFX-PWR-120','sku'=>'EFX-PWR-120','category'=>'ACCESSORY','badge'=>null,'image'=>'https://lh3.googleusercontent.com/aida-public/AB6AXuBQUY4WQ38AlA4Y7erull_OahA7AMarJ6zxRqjeRlGJ3RmkVrVsvpGl6uJlc4jQINnChyE5qy4dNCaKj6rhwZqYeM6rafuCZgJpCQrh1xIkdSM1kM0D5VMqnQOZDbf5-5bq0MQSr0Y2x1uIZU8LHvce-qRvrhpIUf9-OpFadf9k-NnsJyoDYG_DGnBDkm6LZRaM798XZiPdqpnjhS18dTmd26ST8DBSJelAYTCRIxfTmUTkpxfsbQhxQA','description'=>'120W Industrial DIN-Rail Power Supply.','content'=>'Industrial power supply for demanding environments.','specs'=>[],'thumbnails'=>[],'resources'=>[],'status'=>'published','sort_order'=>3],
+            ['slug'=>'efx-iot-lte','name'=>'EFX-IOT-LTE','sku'=>'EFX-IOT-LTE','category'=>'GATEWAY','badge'=>null,'image'=>'https://lh3.googleusercontent.com/aida-public/AB6AXuD3bkLe4YXfLH5_6Pzx2AtkvoZkssmcFG09XGvIUIn7eR7iXhipUcslIpJu81pCch8Sj0qAlwBY1KjA2J8OOUWMNPy0-HGvlw8vPAmwbaM77yQ9LJSVgCgzJKZ66ErtHJch9X2BHCyYR-uvrxnBPuERy0x_SCkZ8JBjLy9G9nnlAYin6AcXZIzyeLMqstxA2hK9-raLZwUOW0kldFjihdaYWoLzy3U-Dg4QZJ3lB3w-urpD70b1x_Bv_w','description'=>'Industrial 4G LTE Cellular IoT Gateway.','content'=>'Secure cellular connectivity for distributed assets.','specs'=>[],'thumbnails'=>[],'resources'=>[],'status'=>'published','sort_order'=>4],
+            ['slug'=>'efx-ser-8','name'=>'EFX-SER-8','sku'=>'EFX-SER-8','category'=>'DEVICE SERVER','badge'=>null,'image'=>'https://lh3.googleusercontent.com/aida-public/AB6AXuAy7voYlXaoHyJRY7ghQ-D0cJLVHzQJJCyw3DjautqHBb-nHcVRQkttTLuvOvXHn9BS6Rs6hEZDlxefRWfbjIDphKLCnbjuyU4ICfZpT48mctkG78roldqdWdB-xL_Zp-uIdBlGqrksJU52tST-NJG8qd8acW4P0VvCCWz35ercxa1VIG5f_UerdT8Zq-L3eOsXgvY4oOTDt-yL36ClRwaIGglsgGP86hjFaEEY80c1UwLMVH762Weihw','description'=>'8-Port RS-232/422/485 Serial Device Server.','content'=>'Industrial serial connectivity for legacy equipment.','specs'=>[],'thumbnails'=>[],'resources'=>[],'status'=>'published','sort_order'=>5],
+        ];
+        foreach ($products as $product) Product::updateOrCreate(['slug'=>$product['slug']], $product);
+    }
+}

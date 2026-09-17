@@ -1,0 +1,1 @@
+import AppLayout from'../layouts/AppLayout';export default function SimplePage({title='Page'}:{title?:string}){return <AppLayout title={title}><div className="rounded-2xl bg-white p-8 shadow dark:bg-gray-800"><h1 className="text-2xl font-semibold">{title}</h1></div></AppLayout>}
