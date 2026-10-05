@@ -2,20 +2,33 @@
 
 import { Link } from "@inertiajs/react";
 import { usePage } from "@inertiajs/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Moon, Sun } from "lucide-react";
 
 const navItems = [
   { label: "Beranda", href: "/" },
   { label: "Profil Sekolah", href: "/profil" },
   { label: "Program", href: "/products" },
   { label: "Mading", href: "/mading" },
-  { label: "Dokumen", href: "/downloads" },
   { label: "Kontak", href: "/contact" },
 ];
 
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [dark, setDark] = useState(() => document.documentElement.classList.contains("dark"));
   const pathname = usePage().url;
+  const siteSettings = (usePage().props as { siteSettings?: { site_name?: string; tagline?: string } }).siteSettings ?? {};
+  const siteName = siteSettings.site_name || "Sekolah Example";
+  const tagline = siteSettings.tagline || "Unggul, Berkarakter, Berprestasi";
+
+  const toggleTheme = () => setDark((value) => {
+    const next = !value;
+    document.documentElement.classList.toggle("dark", next);
+    localStorage.setItem("site-theme", next ? "dark" : "light");
+    return next;
+  });
+
+  useEffect(() => document.documentElement.classList.toggle("dark", dark), [dark]);
 
   const isActive = (href: string) => href === "/" ? pathname === href : pathname.startsWith(href);
 
@@ -23,29 +36,27 @@ export function Header() {
     <>
       <header className="desktop-header">
         <div className="nav-container">
-          <Link className="brand" href="/">Sekolah Example</Link>
+          <Link className="brand" href="/">{siteName}</Link>
           <nav className="desktop-nav" aria-label="Main navigation">
             {navItems.map((item) => (
               <Link className={isActive(item.href) ? "active" : ""} href={item.href} key={item.href}>{item.label}</Link>
             ))}
           </nav>
           <div className="nav-actions">
-            <button aria-label="Search">⌕</button>
-            <button aria-label="Language">◎</button>
-            <button aria-label="Chat">◌</button>
+            <button aria-label={dark ? "Gunakan mode terang" : "Gunakan mode gelap"} onClick={toggleTheme}>{dark ? <Sun size={20} /> : <Moon size={20} />}</button>
           </div>
         </div>
       </header>
 
       <header className="mobile-header">
-        <Link className="brand" href="/">Sekolah Example</Link>
-        <button aria-label="Open menu" onClick={() => setMenuOpen(true)}>☰</button>
+        <Link className="brand" href="/">{siteName}</Link>
+        <div className="mobile-header-actions"><button aria-label={dark ? "Gunakan mode terang" : "Gunakan mode gelap"} onClick={toggleTheme}>{dark ? <Sun size={20} /> : <Moon size={20} />}</button><button aria-label="Open menu" onClick={() => setMenuOpen(true)}>☰</button></div>
       </header>
 
       {menuOpen && <button className="menu-overlay" aria-label="Close menu" onClick={() => setMenuOpen(false)} />}
       <aside className={`mobile-menu ${menuOpen ? "open" : ""}`}>
         <div className="mobile-menu-title">
-          <div><strong>Sekolah Example</strong><span>Unggul, Berkarakter, Berprestasi</span></div>
+          <div><strong>{siteName}</strong><span>{tagline}</span></div>
           <button aria-label="Close menu" onClick={() => setMenuOpen(false)}>×</button>
         </div>
         <nav>

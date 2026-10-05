@@ -11,6 +11,12 @@ use Inertia\Response;
 
 class CmsPageController extends Controller
 {
+    public function uploadImage(Request $request): JsonResponse
+    {
+        $request->validate(['image' => ['required', 'image', 'mimes:jpg,jpeg,png,webp,gif', 'max:2048']]);
+        return response()->json(['path' => '/storage/' . $request->file('image')->store('cms', 'public')]);
+    }
+
     public function apiShow(string $page): JsonResponse
     {
         return response()->json(['data' => $this->content($page)]);

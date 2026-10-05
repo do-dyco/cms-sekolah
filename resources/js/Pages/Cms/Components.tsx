@@ -1,6 +1,6 @@
 import React from 'react';
 import AppLayout from '../../layouts/AppLayout';
-import { ChevronLeft, ChevronRight, Image, Plus, Save, Search, SlidersHorizontal, Trash2, Upload } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Image, Pencil, Plus, Save, Search, SlidersHorizontal, Trash2, Upload } from 'lucide-react';
 
 type Field = { label: string; value?: string; type?: 'input' | 'textarea' | 'upload' | 'select' };
 type Section = { title: string; description: string; fields: Field[] };
@@ -24,6 +24,34 @@ export const UploadBox = ({ label }: { label: string }) => (
         </div>
     </div>
 );
+
+export function ImageUpload({ label, value, onChange }: { label: string; value?: string | null; onChange: (path: string) => void }) {
+    const [uploading, setUploading] = React.useState(false);
+    const [error, setError] = React.useState('');
+    const upload = async (file?: File) => {
+        if (!file) return;
+        setUploading(true); setError('');
+        try {
+            const body = new FormData(); body.append('image', file);
+            const response = await fetch('/cms/upload-image', { method: 'POST', headers: { 'X-CSRF-TOKEN': document.querySelector<HTMLMetaElement>('meta[name="csrf-token"]')?.content ?? '', 'Accept': 'application/json' }, body });
+            const result = await response.json();
+            response.ok ? onChange(result.path) : setError(result.message ?? 'Gambar gagal diunggah.');
+        } catch {
+            setError('Gambar gagal diunggah. Periksa koneksi lalu coba lagi.');
+        } finally {
+            setUploading(false);
+        }
+    };
+    return <label className="block">
+        <span className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">{label}</span>
+        <div className="flex min-h-32 cursor-pointer items-center justify-center rounded-xl border-2 border-dashed border-gray-200 bg-gray-50 p-5 text-center hover:border-brand-500 dark:border-gray-700 dark:bg-gray-900">
+            <div><Upload className="mx-auto mb-2 text-brand-500" /><p className="text-sm font-medium">{uploading ? 'Mengunggah...' : value ? 'Ganti gambar' : 'Pilih gambar'}</p><p className="mt-1 text-xs text-gray-500">PNG, JPG, WEBP atau GIF · maks 2MB</p></div>
+        </div>
+        <input type="file" accept="image/png,image/jpeg,image/webp,image/gif" disabled={uploading} className="hidden" onChange={e => upload(e.target.files?.[0])} />
+        {value && <img src={value} alt="Pratinjau gambar" className="mt-3 max-h-40 rounded-xl object-contain" />}
+        {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
+    </label>;
+}
 
 export const PageHeader = ({ title, description, action = 'Simpan Perubahan' }: { title: string; description: string; action?: string }) => (
     <div className="mb-6 flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
@@ -53,12 +81,14 @@ export function DataTable({ columns, rows, pageSize = 10 }: { columns: TableColu
     const currentPage = Math.min(page, pages);
     const visible = filtered.slice((currentPage - 1) * size, currentPage * size);
     const go = (next: number) => setPage(Math.max(1, Math.min(next, pages)));
+    const hasActions = columns.some(c => c.key === 'actions');
+
     return <div>
         <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div className="relative w-full sm:max-w-xs"><Search size={17} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" /><input value={query} onChange={e => { setQuery(e.target.value); setPage(1); }} placeholder="Search..." className="h-10 w-full rounded-lg border border-gray-200 bg-white pl-10 pr-3 text-sm outline-none focus:border-brand-500 dark:border-gray-700 dark:bg-gray-900" /></div>
             <button className="flex items-center justify-center gap-2 rounded-lg border border-gray-200 px-3 py-2 text-sm font-medium text-gray-600 dark:border-gray-700 dark:text-gray-300"><SlidersHorizontal size={16}/> Filters</button>
         </div>
-        <div className="overflow-x-auto"><table className="w-full min-w-[760px] text-left"><thead><tr className="border-y border-gray-100 bg-gray-50 text-xs uppercase text-gray-500 dark:border-gray-700 dark:bg-gray-900/60">{columns.map(c => <th key={c.key} className="px-4 py-3 font-semibold">{c.label}</th>)}<th className="px-4 py-3 text-right">Aksi</th></tr></thead><tbody>{visible.map((row, i) => <tr key={i} className="border-b border-gray-50 text-sm last:border-0 dark:border-gray-700/60">{columns.map(c => <td key={c.key} className="px-4 py-4">{row[c.key]}</td>)}<td className="px-4 py-4"><div className="flex justify-end gap-2"><button className="rounded-lg border border-gray-200 px-3 py-2 text-xs font-medium hover:border-brand-500 hover:text-brand-500 dark:border-gray-700">Edit</button><button className="rounded-lg border border-red-100 p-2 text-red-500 dark:border-red-900"><Trash2 size={15}/></button></div></td></tr>)}{visible.length === 0 && <tr><td colSpan={columns.length + 1} className="px-4 py-12 text-center text-sm text-gray-500">Tidak ada data ditemukan.</td></tr>}</tbody></table></div>
+        <div className="overflow-x-auto"><table className="w-full min-w-[760px] text-left"><thead><tr className="border-y border-gray-100 bg-gray-50 text-xs uppercase text-gray-500 dark:border-gray-700 dark:bg-gray-900/60">{columns.map(c => <th key={c.key} className="px-4 py-3 font-semibold">{c.label}</th>)}{!hasActions && <th className="px-4 py-3 text-right">Aksi</th>}</tr></thead><tbody>{visible.map((row, i) => <tr key={i} className="border-b border-gray-50 text-sm last:border-0 dark:border-gray-700/60">{columns.map(c => <td key={c.key} className="px-4 py-4">{row[c.key]}</td>)}{!hasActions && <td className="px-4 py-4 text-right text-xs text-gray-400">-</td>}</tr>)}{visible.length === 0 && <tr><td colSpan={columns.length + (hasActions ? 0 : 1)} className="px-4 py-12 text-center text-sm text-gray-500">Tidak ada data ditemukan.</td></tr>}</tbody></table></div>
         <div className="flex flex-col gap-3 border-t border-gray-100 pt-4 text-sm text-gray-500 sm:flex-row sm:items-center sm:justify-between dark:border-gray-700"><div className="flex items-center gap-2">Showing <strong className="text-gray-800 dark:text-gray-200">{filtered.length ? (currentPage - 1) * size + 1 : 0}-{Math.min(currentPage * size, filtered.length)}</strong> of <strong className="text-gray-800 dark:text-gray-200">{filtered.length}</strong><select value={size} onChange={e => { setSize(Number(e.target.value)); setPage(1); }} className="ml-2 rounded-md border border-gray-200 bg-white px-2 py-1 text-xs dark:border-gray-700 dark:bg-gray-900"><option value={5}>5 / page</option><option value={10}>10 / page</option><option value={25}>25 / page</option></select></div><div className="flex items-center gap-1"><button onClick={() => go(currentPage - 1)} disabled={currentPage === 1} className="rounded-lg border border-gray-200 p-2 disabled:opacity-40 dark:border-gray-700"><ChevronLeft size={16}/></button>{Array.from({ length: pages }, (_, i) => i + 1).slice(0, 5).map(number => <button key={number} onClick={() => go(number)} className={`h-8 min-w-8 rounded-lg px-2 text-xs font-medium ${number === currentPage ? 'bg-brand-500 text-white' : 'border border-gray-200 dark:border-gray-700'}`}>{number}</button>)}<button onClick={() => go(currentPage + 1)} disabled={currentPage === pages} className="rounded-lg border border-gray-200 p-2 disabled:opacity-40 dark:border-gray-700"><ChevronRight size={16}/></button></div></div>
     </div>;
 }

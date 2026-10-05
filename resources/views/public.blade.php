@@ -6,6 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @viteReactRefresh
     @vite(['resources/css/site.css', 'resources/js/public.tsx'])
+    <script>if (localStorage.getItem('site-theme') === 'dark' || (!localStorage.getItem('site-theme') && matchMedia('(prefers-color-scheme: dark)').matches)) document.documentElement.classList.add('dark');</script>
     @inertiaHead
 </head>
 <body>

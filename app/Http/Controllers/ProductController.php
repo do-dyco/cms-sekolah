@@ -70,7 +70,7 @@ class ProductController extends Controller
 
     private function validated(Request $request, ?Product $product = null): array
     {
-        return $request->validate([
+        $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'slug' => ['required', 'string', 'max:255', Rule::unique('products', 'slug')->ignore($product)],
             'sku' => ['nullable', 'string', 'max:100'],
@@ -90,5 +90,9 @@ class ProductController extends Controller
             'status' => ['required', Rule::in(['published', 'draft'])],
             'sort_order' => ['required', 'integer', 'min:0'],
         ]);
+        if ($request->hasFile('image')) {
+            $data['image'] = '/storage/' . $request->file('image')->store('cms', 'public');
+        }
+        return $data;
     }
 }

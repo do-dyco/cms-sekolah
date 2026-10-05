@@ -22,10 +22,10 @@ export function ArticleCard({ article }: { article: Article }) {
       {article.image && <ImagePanel className={article.featured ? "news-photo-lg" : "news-photo"} image={article.image} label={article.title} />}
       <div className="news-content">
         <div className="news-meta"><span>{article.category}</span><time>{article.date}</time></div>
-        {article.featured && <Badge>FEATURED</Badge>}
+        {article.featured && <Badge>PILIHAN</Badge>}
         <h3>{article.title}</h3>
         <p>{article.description}</p>
-        <Link href={article.href}>{article.featured ? "Read Full Article" : "Read Article"}</Link>
+        <Link href={article.href}>{article.featured ? "Baca Selengkapnya" : "Baca Mading"}</Link>
       </div>
     </article>
   );

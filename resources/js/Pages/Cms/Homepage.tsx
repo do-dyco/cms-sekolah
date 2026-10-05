@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useForm } from '@inertiajs/react';
 import AppLayout from '../../layouts/AppLayout';
-import { Card, DataTable, PageHeader, Status, Thumb } from './Components';
+import { Card, DataTable, ImageUpload, PageHeader, Status, Thumb } from './Components';
 
 type Standard = { icon: string; title: string; description: string };
 type Product = { name: string; description: string; image: string; badge: string | null; href: string };
@@ -51,7 +51,8 @@ export default function Homepage({ homepage }: { homepage: HomepageData }) {
             {showForm ? (
                 <form onSubmit={(e) => { e.preventDefault(); put('/cms/homepage'); }} className="space-y-6">
             <Section title="Hero Section">
-                {Object.entries({ eyebrow:'Eyebrow / Label Kecil', title:'Judul Utama', description:'Deskripsi', primary_button_text:'Teks Tombol Utama', primary_button_url:'Link Tombol Utama', secondary_button_text:'Teks Tombol Sekunder', secondary_button_url:'Link Tombol Sekunder', background_image:'URL Background Image' }).map(([key,label]) => <Field key={key} label={label} value={String(data.hero[key] ?? '')} onChange={(v)=>updateHero(key,v)} textarea={key==='description'} />)}
+                {Object.entries({ eyebrow:'Eyebrow / Label Kecil', title:'Judul Utama', description:'Deskripsi', primary_button_text:'Teks Tombol Utama', primary_button_url:'Link Tombol Utama', secondary_button_text:'Teks Tombol Sekunder', secondary_button_url:'Link Tombol Sekunder' }).map(([key,label]) => <Field key={key} label={label} value={String(data.hero[key] ?? '')} onChange={(v)=>updateHero(key,v)} textarea={key==='description'} />)}
+                <ImageUpload label="Gambar Latar Hero" value={data.hero.background_image} onChange={value => updateHero('background_image', value)} />
             </Section>
             <Section title="Keunggulan Sekolah">
                 <Field label="Judul Section" value={data.standards_section.title} onChange={(v)=>setData('standards_section',{...data.standards_section,title:v})}/>
@@ -60,7 +61,7 @@ export default function Homepage({ homepage }: { homepage: HomepageData }) {
             </Section>
             <Section title="Program Unggulan">
                 {(['title','description','link_text','link_url'] as const).map(key=><Field key={key} label={{title:'Judul Section',description:'Deskripsi Section',link_text:'Teks Link',link_url:'Link Tujuan'}[key]} value={data.featured_section[key]} onChange={(v)=>setData('featured_section',{...data.featured_section,[key]:v})} textarea={key==='description'}/>)}
-                {data.featured_products.map((item,index)=><div key={index} className="grid gap-3 rounded-xl border p-4 md:grid-cols-2"><Field label="Nama Program" value={item.name} onChange={(v)=>updateProduct(index,'name',v)}/><Field label="Label" value={item.badge ?? ''} onChange={(v)=>updateProduct(index,'badge',v)}/><Field label="Deskripsi" value={item.description} onChange={(v)=>updateProduct(index,'description',v)}/><Field label="URL Gambar" value={item.image} onChange={(v)=>updateProduct(index,'image',v)}/><Field label="Link Detail" value={item.href} onChange={(v)=>updateProduct(index,'href',v)}/></div>)}
+                {data.featured_products.map((item,index)=><div key={index} className="grid gap-3 rounded-xl border p-4 md:grid-cols-2"><Field label="Nama Program" value={item.name} onChange={(v)=>updateProduct(index,'name',v)}/><Field label="Label" value={item.badge ?? ''} onChange={(v)=>updateProduct(index,'badge',v)}/><Field label="Deskripsi" value={item.description} onChange={(v)=>updateProduct(index,'description',v)}/><ImageUpload label="Gambar Program" value={item.image} onChange={(v)=>updateProduct(index,'image',v)}/><Field label="Link Detail" value={item.href} onChange={(v)=>updateProduct(index,'href',v)}/></div>)}
             </Section>
                     <button type="submit" disabled={processing} className="flex items-center justify-center gap-2 rounded-xl bg-brand-500 px-6 py-3 font-semibold text-white disabled:opacity-50">{processing ? 'Menyimpan...' : 'Simpan Perubahan'}</button>
                 </form>

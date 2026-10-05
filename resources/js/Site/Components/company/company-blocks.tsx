@@ -1,7 +1,7 @@
 import { ImagePanel } from "../ui/shared";
 
 export function SplitHero({ title, description, image, pill }: { title: string; description: string; image: string; pill: string }) {
-  return <section className="split-hero"><div className="split-copy"><h1>{title}</h1><p>{description}</p><div className="split-actions"><button className="button button-primary" type="button">Download Profile</button><button className="button button-secondary" type="button">Contact Sales</button></div></div><div className="split-media"><ImagePanel image={image} label={title} /><span>{pill}</span></div></section>;
+  return <section className="split-hero"><div className="split-copy"><h1>{title}</h1><p>{description}</p></div><div className="split-media"><ImagePanel image={image} label={title} /><span>{pill}</span></div></section>;
 }
 
 export function Timeline({ items }: { items: { year: string; title: string; description: string }[] }) {

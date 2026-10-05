@@ -30,5 +30,6 @@ export default function CustomerService({ customer_service = {} }: { customer_se
                 <div className="md:col-span-2 flex justify-end"><button disabled={processing} className="rounded-xl bg-brand-500 px-5 py-3 text-sm font-semibold text-white disabled:opacity-50">{processing ? 'Menyimpan...' : 'Simpan'}</button></div>
             </form>}
         </Card>
+        <Card title="Informasi Sekolah Aktif" description="Ringkasan informasi layanan yang tampil pada halaman Informasi Sekolah di website publik."><div className="space-y-4"><div><p className="text-xs text-gray-500">Judul</p><p className="font-semibold">{customer_service.hero_title || 'Belum diisi'}</p></div><div><p className="text-xs text-gray-500">Deskripsi</p><p className="text-sm">{customer_service.hero_description || 'Belum diisi'}</p></div><div className="grid gap-4 md:grid-cols-3"><div><p className="text-xs text-gray-500">Telepon</p><p>{customer_service.phone || 'Belum diisi'}</p></div><div><p className="text-xs text-gray-500">Email</p><p>{customer_service.email || 'Belum diisi'}</p></div><div><p className="text-xs text-gray-500">WhatsApp</p><p>{customer_service.whatsapp || 'Belum diisi'}</p></div></div></div></Card>
     </div></AppLayout>;
 }

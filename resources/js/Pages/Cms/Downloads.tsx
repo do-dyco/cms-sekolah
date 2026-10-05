@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { router, useForm } from '@inertiajs/react';
 import AppLayout from '../../layouts/AppLayout';
+import { Pencil, Trash2 } from 'lucide-react';
 import { Card, DataTable, PageHeader, Status } from './Components';
 
 type Download = {
@@ -28,7 +29,7 @@ export default function Downloads({ downloads }: { downloads: Download[] }) {
         title: d.title, type: d.type || '—', category: d.category || '—',
         version: d.version || '—', size: d.file_size || '—',
         status: <Status>{d.status === 'published' ? 'Published' : 'Draft'}</Status>,
-        actions: <div className="flex gap-2"><button onClick={() => openEdit(d)} className="rounded-lg bg-brand-50 px-3 py-2 text-xs font-semibold text-brand-600">Edit</button><button onClick={() => remove(d)} className="rounded-lg bg-red-50 px-3 py-2 text-xs font-semibold text-red-600">Hapus</button></div>,
+        actions: <div className="flex justify-end gap-1"><button type="button" title="Edit item" aria-label={`Edit item ${d.title}`} onClick={() => openEdit(d)} className="rounded-lg p-2 text-gray-500 transition hover:bg-brand-50 hover:text-brand-600 dark:text-gray-400 dark:hover:bg-brand-900/30"><Pencil size={16} /></button><button type="button" title="Hapus item" aria-label={`Hapus item ${d.title}`} onClick={() => remove(d)} className="rounded-lg p-2 text-gray-500 transition hover:bg-red-50 hover:text-red-600 dark:text-gray-400 dark:hover:bg-red-900/30"><Trash2 size={16} /></button></div>,
     }));
 
     return <AppLayout title="Downloads"><div className="space-y-6">

@@ -90,6 +90,7 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('cms')->name('cms.')->middleware('role:admin')->group(function () {
+        Route::post('/upload-image', [CmsPageController::class, 'uploadImage'])->name('upload-image');
         Route::get('/homepage', [HomepageController::class, 'edit'])->name('homepage');
         Route::put('/homepage', [HomepageController::class, 'update'])->name('homepage.update');
 

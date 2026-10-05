@@ -63,7 +63,7 @@ class NewsController extends Controller
 
     private function validated(Request $request, ?News $news = null): array
     {
-        return $request->validate([
+        $data = $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'slug' => ['required', 'string', 'max:255', Rule::unique('news', 'slug')->ignore($news)],
             'category' => ['nullable', 'string', 'max:100'],
@@ -76,5 +76,9 @@ class NewsController extends Controller
             'status' => ['required', Rule::in(['published', 'draft'])],
             'sort_order' => ['required', 'integer', 'min:0'],
         ]);
+        if ($request->hasFile('image')) {
+            $data['image'] = '/storage/' . $request->file('image')->store('cms', 'public');
+        }
+        return $data;
     }
 }

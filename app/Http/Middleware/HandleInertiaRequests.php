@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\HomepageContent;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -26,6 +27,11 @@ class HandleInertiaRequests extends Middleware
         return [
             ...parent::share($request),
             'appName' => config('app.name'),
+            'siteSettings' => fn () => HomepageContent::query()
+                ->whereIn('key', ['global.site_name', 'global.tagline', 'global.footer_text'])
+                ->pluck('value', 'key')
+                ->mapWithKeys(fn ($value, $key) => [str_replace('global.', '', $key) => $value])
+                ->all(),
             'auth' => [
                 'user' => $request->user() ? [
                     'id' => $request->user()->id,

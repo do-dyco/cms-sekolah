@@ -23,5 +23,6 @@ export default function Contact({ contact = {} }: { contact?: Record<string, str
                 <div className="md:col-span-2 flex justify-end"><button disabled={processing} className="rounded-xl bg-brand-500 px-5 py-3 text-sm font-semibold text-white disabled:opacity-50">{processing ? 'Menyimpan...' : 'Simpan'}</button></div>
             </form>}
         </Card>
+        <Card title="Informasi Kontak Aktif" description="Data kontak yang tampil pada halaman Kontak Sekolah di website publik."><div className="grid gap-4 md:grid-cols-2"><div><p className="text-xs text-gray-500">Telepon</p><p className="font-semibold">{contact.phone || 'Belum diisi'}</p></div><div><p className="text-xs text-gray-500">Email</p><p className="font-semibold">{contact.email || 'Belum diisi'}</p></div></div></Card>
     </div></AppLayout>;
 }
