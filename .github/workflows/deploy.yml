@@ -21,12 +21,13 @@ jobs:
           extensions: mbstring, pdo_sqlite, sqlite3
           coverage: none
 
-      - name: Install and test
+      - name: Install PHP deps
+        run: composer install --no-interaction --no-progress --prefer-dist
+
+      - name: Prepare env
         run: |
-          composer install --no-interaction --no-progress --prefer-dist
           cp .env.example .env
           php artisan key:generate
-          php artisan test --compact
 
       - uses: actions/setup-node@v4
         with:
@@ -37,6 +38,9 @@ jobs:
         run: |
           npm ci
           npm run build
+
+      - name: Run tests
+        run: php artisan test --compact
 
       - name: Prepare production dependencies
         run: composer install --no-dev --no-interaction --no-progress --prefer-dist --optimize-autoloader
