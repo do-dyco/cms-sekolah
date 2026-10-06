@@ -63,3 +63,18 @@ jobs:
             **/storage/*.key
             public/storage
             public/hot
+
+      - name: Deploy web root (docroot terkunci ke public_html)
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: 68.65.120.145
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          port: 21
+          local-dir: ./public/
+          server-dir: /public_html/
+          exclude: |
+            index.php
+            storage
+            hot
