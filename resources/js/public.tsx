@@ -13,7 +13,7 @@ router.on('invalid', (event) => {
 router.on('exception', () => window.location.reload());
 
 createInertiaApp({
-  title: (t) => `${t} | Sekolah Example`,
+  title: (t) => `${t} | MTS Tadibbul Ummah`,
   resolve: (name) => pages[`./Site/Pages/${name.replace(/^Site\//, '')}.tsx`],
   setup({ el, App, props }) {
     if (el) createRoot(el).render(<App {...props} />);

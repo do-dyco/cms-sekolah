@@ -1,4 +1,4 @@
-import { Link, usePage } from "@inertiajs/react";
+import { usePage } from "@inertiajs/react";
 
 const groups = [
   { title: "Sekolah", links: [{ label: "Profil", href: "/profil" }, { label: "Visi", href: "/profil" }, { label: "Misi", href: "/profil" }] },
@@ -19,7 +19,7 @@ export function Footer() {
         {groups.map((group) => (
           <div className="footer-links" key={group.title}>
             <h3>{group.title}</h3>
-            {group.links.map((item) => <Link href={item.href} key={item.label}>{item.label}</Link>)}
+            {group.links.map((item) => <a href={item.href} key={item.label}>{item.label}</a>)}
           </div>
         ))}
       </div>

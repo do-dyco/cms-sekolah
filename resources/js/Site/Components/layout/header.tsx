@@ -1,6 +1,5 @@
 "use client";
 
-import { Link } from "@inertiajs/react";
 import { usePage } from "@inertiajs/react";
 import { useEffect, useState } from "react";
 import { Moon, Sun } from "lucide-react";
@@ -36,10 +35,10 @@ export function Header() {
     <>
       <header className="desktop-header">
         <div className="nav-container">
-          <Link className="brand" href="/" aria-label={siteName}><img src="/images/logo/logo-sekolah.png" alt={siteName} /></Link>
+          <a className="brand" href="/" aria-label={siteName}><img src="/images/logo/logo-sekolah.png" alt={siteName} /></a>
           <nav className="desktop-nav" aria-label="Main navigation">
             {navItems.map((item) => (
-              <Link className={isActive(item.href) ? "active" : ""} href={item.href} key={item.href}>{item.label}</Link>
+              <a className={isActive(item.href) ? "active" : ""} href={item.href} key={item.href}>{item.label}</a>
             ))}
           </nav>
           <div className="nav-actions">
@@ -49,7 +48,7 @@ export function Header() {
       </header>
 
       <header className="mobile-header">
-        <Link className="brand" href="/" aria-label={siteName}><img src="/images/logo/logo-sekolah.png" alt={siteName} /></Link>
+        <a className="brand" href="/" aria-label={siteName}><img src="/images/logo/logo-sekolah.png" alt={siteName} /></a>
         <div className="mobile-header-actions"><button aria-label={dark ? "Gunakan mode terang" : "Gunakan mode gelap"} onClick={toggleTheme}>{dark ? <Sun size={20} /> : <Moon size={20} />}</button><button aria-label="Open menu" onClick={() => setMenuOpen(true)}>☰</button></div>
       </header>
 
@@ -61,10 +60,10 @@ export function Header() {
         </div>
         <nav>
           {navItems.map((item) => (
-            <Link className={isActive(item.href) ? "active" : ""} href={item.href} key={item.href} onClick={() => setMenuOpen(false)}>{item.label}</Link>
+            <a className={isActive(item.href) ? "active" : ""} href={item.href} key={item.href} onClick={() => setMenuOpen(false)}>{item.label}</a>
           ))}
         </nav>
-        <Link className="support-button" href="/contact" onClick={() => setMenuOpen(false)}>Hubungi Sekolah</Link>
+        <a className="support-button" href="/contact" onClick={() => setMenuOpen(false)}>Hubungi Sekolah</a>
       </aside>
     </>
   );
