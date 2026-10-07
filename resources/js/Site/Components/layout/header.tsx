@@ -36,7 +36,7 @@ export function Header() {
     <>
       <header className="desktop-header">
         <div className="nav-container">
-          <Link className="brand" href="/">{siteName}</Link>
+          <Link className="brand" href="/" aria-label={siteName}><img src="/images/logo/logo-sekolah.jpg" alt={siteName} /></Link>
           <nav className="desktop-nav" aria-label="Main navigation">
             {navItems.map((item) => (
               <Link className={isActive(item.href) ? "active" : ""} href={item.href} key={item.href}>{item.label}</Link>
@@ -49,7 +49,7 @@ export function Header() {
       </header>
 
       <header className="mobile-header">
-        <Link className="brand" href="/">{siteName}</Link>
+        <Link className="brand" href="/" aria-label={siteName}><img src="/images/logo/logo-sekolah.jpg" alt={siteName} /></Link>
         <div className="mobile-header-actions"><button aria-label={dark ? "Gunakan mode terang" : "Gunakan mode gelap"} onClick={toggleTheme}>{dark ? <Sun size={20} /> : <Moon size={20} />}</button><button aria-label="Open menu" onClick={() => setMenuOpen(true)}>☰</button></div>
       </header>
 

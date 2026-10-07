@@ -12,6 +12,8 @@ button { font: inherit; cursor: pointer; }
 .desktop-header { position: fixed; inset: 0 0 auto; z-index: 50; height: 80px; border-bottom: 1px solid #bdc9c633; background: color-mix(in srgb, var(--surface) 88%, transparent); backdrop-filter: blur(12px); }
 .nav-container { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 28px; }
 .brand { color: var(--primary); font-size: 24px; font-weight: 800; letter-spacing: -.04em; }
+.brand img { display: block; width: auto; height: 56px; object-fit: contain; }
+.mobile-header .brand img { height: 48px; }
 .desktop-nav { display: flex; align-items: center; gap: 24px; font-size: 14px; color: var(--muted); }
 .desktop-nav a { padding-block: 5px; white-space: nowrap; }.desktop-nav a:hover, .desktop-nav .active { color: var(--primary); }.desktop-nav .active { border-bottom: 2px solid var(--primary); font-weight: 700; }
 .nav-actions { display: flex; gap: 12px; color: var(--primary); }.nav-actions button { display: grid; place-items: center; border: 0; background: transparent; padding: 8px; }
