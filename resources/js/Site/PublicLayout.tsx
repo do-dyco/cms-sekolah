@@ -5,5 +5,5 @@ import { Footer } from './Components/layout/footer';
 import '../../css/site.css';
 
 export function PublicLayout({ title, children }: { title: string; children: React.ReactNode }) {
-  return <><Head title={`${title} | Sekolah Example`} /><div className="site-shell"><Header /><main>{children}</main><Footer /></div></>;
+  return <><Head title={`${title} | MTS Tadibbul Ummah`} /><div className="site-shell"><Header /><main>{children}</main><Footer /></div></>;
 }
